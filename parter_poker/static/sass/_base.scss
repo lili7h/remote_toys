@@ -1,0 +1,179 @@
+.slidecontainer {
+  width: 100%; /* Width of the outside container */
+}
+
+
+/* The slider itself */
+.slider {
+  -webkit-appearance: none;  /* Override default CSS styles */
+  appearance: none;
+  width: 100%; /* Full-width */
+  height: 25px; /* Specified height */
+  background: #000000; /* Grey background */
+  outline: none; /* Remove outline */
+  opacity: 0.7; /* Set transparency (for mouse-over effects on hover) */
+  -webkit-transition: .2s; /* 0.2 seconds transition on hover */
+  transition: opacity .2s;
+}
+
+/* Mouse-over effects */
+.slider:hover {
+  opacity: 1; /* Fully shown on mouse-over */
+}
+
+/* The slider handle (use -webkit- (Chrome, Opera, Safari, Edge) and -moz- (Firefox) to override default look) */
+.slider::-webkit-slider-thumb {
+  -webkit-appearance: none; /* Override default look */
+  appearance: none;
+  width: 25px; /* Set a specific slider handle width */
+  height: 25px; /* Slider handle height */
+  background: #04AA6D; /* Green background */
+  cursor: pointer; /* Cursor on hover */
+}
+
+.slider::-moz-range-thumb {
+  width: 25px; /* Set a specific slider handle width */
+  height: 25px; /* Slider handle height */
+  background: #04AA6D; /* Green background */
+  cursor: pointer; /* Cursor on hover */
+}
+
+//Function to return RGB color code as string ex. "255, 255, 255"
+@function hexToRGBString($hexColor) {
+  @return "#{round(red($hexColor))},#{round(green($hexColor))},#{round(blue($hexColor))}";
+}
+
+//Colors vars Default
+$c-background-body-default: #ffffff;
+$c-color-text-default: #3c3b45;
+$c-background-button-default: #141313;
+$c-hover-button-default: #3b3b3b;
+$c-text-button-default: #ffffff;
+
+//Colors vars Dark
+$c-background-body-dark: #2b2b2b;
+$c-color-text-dark: #ffffff;
+$c-background-button-dark: #ffffff;
+$c-hover-button-dark: #bfbfbf;
+$c-text-button-dark: #3c3b45;
+
+//Themes map
+$themes: (
+  default: (
+    body: hexToRGBString($c-background-body-default),
+    text: hexToRGBString($c-color-text-default),
+    button: hexToRGBString($c-background-button-default),
+    hover-button: hexToRGBString($c-hover-button-default),
+    text-button: hexToRGBString($c-text-button-default)
+  ),
+  dark: (
+    body: hexToRGBString($c-background-body-dark),
+    text: hexToRGBString($c-color-text-dark),
+    button: hexToRGBString($c-background-button-dark),
+    hover-button: hexToRGBString($c-hover-button-dark),
+    text-button: hexToRGBString($c-text-button-dark)
+  )
+);
+
+$theme-map: null;
+$i: null;
+
+//Mixin to apply themes from themes map
+@mixin themed() {
+  $i: 0 !global;
+  @each $theme, $map in $themes {
+    $theme-map: () !global;
+    @if $i == 0 {
+      @each $key, $submap in $map {
+        $value: map-get(map-get($themes, $theme), "#{$key}");
+        $theme-map: map-merge(
+          $theme-map,
+          (
+            $key: $value
+          )
+        ) !global;
+      }
+      @content;
+    } @else {
+      @at-root [data-theme="#{$theme}"] #{&} {
+        @each $key, $submap in $map {
+          $value: map-get(map-get($themes, $theme), "#{$key}");
+          $theme-map: map-merge(
+            $theme-map,
+            (
+              $key: $value
+            )
+          ) !global;
+        }
+        @content;
+      }
+    }
+    $theme-map: null !global;
+    $i: $i + 1 !global;
+  }
+}
+
+//Function to return unquoted string as property's color value
+@function theme-color($color: body, $opacity: 1) {
+  @return unquote("rgba(" + map-get($theme-map, $color) + "," + $opacity + ")");
+}
+
+html {
+  height: 100%;
+}
+
+body {
+  font-size: 4rem;
+  font-family: Arial;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  @include themed() {
+    background-color: theme-color(body, 1);
+  }
+}
+
+.container {
+  p {
+    font-weight: bold;
+    @include themed() {
+      color: theme-color(text, 0.5);
+    }
+  }
+  h2 {
+    @include themed() {
+      color: theme-color(text, 0.5);
+    }
+  }
+}
+
+.switch-theme {
+  position: absolute;
+  top: 16px;
+  font-size: 2rem;
+  padding: 16px;
+  border-radius: 16px;
+  cursor: pointer;
+  transition: 0.5s ease;
+  @include themed() {
+    background-color: theme-color(button, 1);
+    color: theme-color(text-button, 1);
+  }
+  &:hover {
+    @include themed() {
+      background-color: theme-color(hover-button, 1);
+    }
+  }
+}
+
+datalist {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  writing-mode: vertical-lr;
+  @include themed() {
+    color: theme-color(text, 0.5);
+  }
+}

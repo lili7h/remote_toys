@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>🥩🥩🥩</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+</head>
+<body>
+    <div class="container">
+        <h2>The Feel-Good Slider</h2><br />
+        <p>Online users: <i id="online-users-value">0</i></p>
+        <p>Current value: <i id="the-value">0</i></p>
+        <div class="slidecontainer">
+            <input type="range" min="0" max="100" step="1" value="0" class="slider" id="vibrator_input" list="markers">
+            <datalist id="markers">
+              <option value="0" label="off"></option>
+              <option value="25" label="pleasurable"></option>
+              <option value="50" label="medium"></option>
+              <option value="75" label="intense"></option>
+              <option value="100" label="oh fuck"></option>
+            </datalist>
+        </div>
+    </div>
+
+
+    <a class="switch-theme">Switch Theme</a>
+    <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+</body>
+</html>
