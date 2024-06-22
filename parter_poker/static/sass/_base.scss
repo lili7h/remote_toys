@@ -127,7 +127,6 @@ body {
   font-family: Arial;
   display: flex;
   justify-content: center;
-  align-items: center;
   height: 100%;
   @include themed() {
     background-color: theme-color(body, 1);
@@ -148,12 +147,16 @@ body {
   }
 }
 
+.flex-container {
+    display: flex;
+    align-items: center;
+
+}
+
 .switch-theme {
-  position: absolute;
-  top: 16px;
-  font-size: 2rem;
   padding: 16px;
   border-radius: 16px;
+  margin: 1rem;
   cursor: pointer;
   transition: 0.5s ease;
   @include themed() {

@@ -165,4 +165,5 @@ def devapp():
 
 
 if __name__ == "__main__":
-    devapp()
+    dev_app = devapp()
+    dev_app.run()
