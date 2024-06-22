@@ -150,7 +150,6 @@ body {
 .flex-container {
     display: flex;
     align-items: center;
-
 }
 
 .switch-theme {
@@ -158,6 +157,7 @@ body {
   border-radius: 16px;
   margin: 1rem;
   cursor: pointer;
+  text-wrap: nowrap;
   transition: 0.5s ease;
   @include themed() {
     background-color: theme-color(button, 1);
