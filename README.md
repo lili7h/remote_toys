@@ -5,7 +5,8 @@ Yeah I typo'd it on creating the project and couldn't be assed to fix it.
 # Screenshots
 
 **The Web Client**
-![image](https://github.com/lili7h/remote_toys/assets/85176789/6cffd624-8a6b-4f92-95f9-54945ce55f5f)
+![image](https://github.com/lili7h/remote_toys/assets/85176789/07d44556-2d2b-4322-b66b-5b74b48e9dac)
+
 
 # Using
 ## Dev
